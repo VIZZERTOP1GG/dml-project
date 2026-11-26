@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DML Справочник</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🐉 DML Справочник</h1>
+
+<div class="icon-tabs">
+    <div class="icon-tab active" id="tab-catalog" onclick="switchTab('catalog')">
+        <span class="emoji">📖</span>
+        <span>Каталог</span>
+    </div>
+    <div class="icon-tab" id="tab-inventory" onclick="switchTab('inventory')">
+        <span class="emoji">🎒</span>
+        <span>Инвентарь</span>
+    </div>
+    <div class="icon-tab" id="tab-sigils" onclick="switchTab('sigils')">
+        <span class="emoji">💎</span>
+        <span>Символы</span>
+    </div>
+</div>
+
+<input type="text" id="searchInput" class="search-box" placeholder="Поиск...">
+
+<!-- Фильтры (показываются только во вкладке Символы) -->
+<div class="filter-box" id="sigilFilters" style="display:none;">
+    <div class="filter-btn active" onclick="setSigilFilter('normal')" id="f-normal">Обычные</div>
+    <div class="filter-btn" onclick="setSigilFilter('element')" id="f-element">Стихии</div>
+</div>
+
+<div id="listContainer" class="grid"></div>
+
+<!-- Кнопка сброса -->
+<button id="resetBtn" class="reset-btn">🗑️ Полный сброс данных</button>
+
+<div class="bar">
+    <div>Всего видов: <span id="totalCount">0</span></div>
+    <div>Всего штук: <span id="ownedCount">0</span></div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html> 
