@@ -489,3 +489,51 @@ searchInput.oninput = function() { render(); };
 
 // Старт
 render();
+
+// ===== ГЕНЕРАТОР SVG-ИКОНОК (СТИЛИЗОВАННЫХ ПОД ИГРУ) =====
+function getElementSVG(name) {
+    // Базовые настройки для всех иконок
+    var base = 'viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"';
+    
+    var svgs = {
+        // Огонь: Языки пламени, красно-оранжевые
+        "Огонь": '<svg ' + base + '><path d="M50 10 C30 40 25 55 35 70 C40 80 50 85 50 95 C50 85 60 80 65 70 C75 55 70 40 50 10 Z" fill="#ff5722"/><path d="M50 35 C40 55 40 65 45 75 C48 82 50 85 50 90 C50 85 52 82 55 75 C60 65 60 55 50 35 Z" fill="#ffeb3b"/></svg>',
+        
+        // Вода: Капля с бликом, сине-голубая
+        "Вода": '<svg ' + base + '><path d="M50 10 C50 10 20 50 20 70 C20 85 33 95 50 95 C67 95 80 85 80 70 C80 50 50 10 50 10 Z" fill="#2196f3"/><path d="M40 65 C40 75 45 82 50 85 C55 82 60 75 60 65 C60 60 55 55 50 55 C45 55 40 60 40 65 Z" fill="#bbdefb" opacity="0.6"/></svg>',
+        
+        // Земля: Скала/гора, коричнево-зелёная
+        "Земля": '<svg ' + base + '><path d="M10 90 L40 40 L60 70 L75 45 L90 90 Z" fill="#795548"/><path d="M10 90 L40 40 L50 55 L35 75 Z" fill="#5d4037"/><path d="M40 40 L60 70 L55 75 L45 55 Z" fill="#8d6e63"/></svg>',
+        
+        // Растение: Лист с прожилками, зелёный
+        "Растение": '<svg ' + base + '><path d="M50 90 C50 90 20 80 20 40 C20 20 40 10 50 10 C60 10 80 20 80 40 C80 80 50 90 50 90 Z" fill="#4caf50"/><path d="M50 90 L50 50" stroke="#1b5e20" stroke-width="3" fill="none"/><path d="M50 70 L35 60 M50 60 L65 50 M50 50 L35 40" stroke="#1b5e20" stroke-width="2" fill="none"/></svg>',
+        
+        // Металл: Шестиугольник/гайка, серый
+        "Металл": '<svg ' + base + '><polygon points="50,10 90,30 90,70 50,90 10,70 10,30" fill="#9e9e9e"/><polygon points="50,25 75,40 75,60 50,75 25,60 25,40" fill="#616161"/><circle cx="50" cy="50" r="10" fill="#e0e0e0"/></svg>',
+        
+        // Энергия: Молния, жёлтая
+        "Энергия": '<svg ' + base + '><path d="M60 10 L20 55 L45 55 L35 90 L80 45 L55 45 L60 10 Z" fill="#ffeb3b"/><path d="M60 10 L20 55 L45 55 L35 90 L80 45 L55 45 L60 10 Z" fill="none" stroke="#fbc02d" stroke-width="2"/></svg>',
+        
+        // Пустота: Тёмный портал/водоворот, фиолетово-чёрный
+        "Пустота": '<svg ' + base + '><circle cx="50" cy="50" r="40" fill="#311b92"/><circle cx="50" cy="50" r="30" fill="#1a1a2e"/><path d="M50 20 A30 30 0 0 1 80 50 A25 25 0 0 1 55 75 A20 20 0 0 1 35 55 A15 15 0 0 1 50 40" fill="none" stroke="#7c4dff" stroke-width="4"/></svg>',
+        
+        // Свет: Солнце с лучами, жёлто-белый
+        "Свет": '<svg ' + base + '><circle cx="50" cy="50" r="20" fill="#fff9c4"/><path d="M50 5 L50 25 M50 75 L50 95 M5 50 L25 50 M75 50 L95 50 M18 18 L32 32 M68 68 L82 82 M18 82 L32 68 M68 32 L82 18" stroke="#ffeb3b" stroke-width="5" stroke-linecap="round"/></svg>',
+        
+        // Тень: Луна/полумесяц, тёмно-фиолетовый
+        "Тень": '<svg ' + base + '><path d="M50 10 A40 40 0 1 0 50 90 A30 30 0 1 1 50 10 Z" fill="#4a148c"/><circle cx="65" cy="40" r="5" fill="#9c27b0"/><circle cx="70" cy="60" r="3" fill="#9c27b0"/></svg>',
+        
+        // Ветер: Закрученные линии, голубой
+        "Ветер": '<svg ' + base + '><path d="M20 40 Q50 20 80 40 Q60 60 30 60 Q70 70 80 80" fill="none" stroke="#80deea" stroke-width="6" stroke-linecap="round"/><path d="M15 55 Q45 45 70 55" fill="none" stroke="#4dd0e1" stroke-width="4" stroke-linecap="round"/></svg>',
+        
+        // Особые стихии (стилизованные)
+        "Призма": '<svg ' + base + '><polygon points="50,10 90,90 10,90" fill="none" stroke="url(#rainbow)" stroke-width="8"/><defs><linearGradient id="rainbow" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff0000"/><stop offset="20%" stop-color="#ff9800"/><stop offset="40%" stop-color="#ffeb3b"/><stop offset="60%" stop-color="#4caf50"/><stop offset="80%" stop-color="#2196f3"/><stop offset="100%" stop-color="#9c27b0"/></linearGradient></defs></svg>',
+        
+        "Тиран": '<svg ' + base + '><path d="M50 15 C30 15 20 30 20 45 C20 55 25 60 30 65 L30 80 C30 85 35 90 50 90 C65 90 70 85 70 80 L70 65 C75 60 80 55 80 45 C80 30 70 15 50 15 Z" fill="#b71c1c"/><circle cx="35" cy="40" r="5" fill="#ffeb3b"/><circle cx="65" cy="40" r="5" fill="#ffeb3b"/><path d="M40 55 L50 65 L60 55" fill="none" stroke="#ffeb3b" stroke-width="3"/></svg>',
+        
+        // Заглушка
+        "Default": '<svg ' + base + '><circle cx="50" cy="50" r="40" fill="#555"/><text x="50" y="60" text-anchor="middle" fill="#fff" font-size="30">?</text></svg>'
+    };
+    
+    return svgs[name] || svgs["Default"];
+}
